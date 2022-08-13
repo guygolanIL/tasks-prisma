@@ -4,8 +4,9 @@
   "description": "a starter config for express + prisma backend with ts",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon src/index.ts"
+    "start": "npm run db:migrate && ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "db:migrate": "prisma migrate dev"
   },
   "author": "Guy.Golan",
   "license": "ISC",

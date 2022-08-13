@@ -10,8 +10,11 @@ app.use(json());
 async function start() {
     try {
         await prisma.$connect();
-        const user = await prisma.user.findFirst();
-        console.log(user);
+        const users = await prisma.user.findMany();
+        console.log(users);
+
+        const tasks = await prisma.task.findMany();
+        console.log(tasks);
         app.listen(port, () => {
             console.log(`Server started at port ${port}`);
         });
