@@ -7,14 +7,32 @@ const prisma = new PrismaClient();
 
 app.use(json());
 
+app.get('/user', async (req, res) => {
+    const user = await prisma.user.findMany({
+        include: {
+            tasks: true
+        }
+    });
+    res.send(user);
+});
+
+app.get('/addTask/:name', async (req, res) => {
+
+    const task = await prisma.task.create({
+        data: {
+            title: req.params.name,
+            description: `description: ${req.params.name}`,
+            userId: 1
+        }
+    });
+
+    res.send(task);
+});
+
 async function start() {
     try {
         await prisma.$connect();
-        const users = await prisma.user.findMany();
-        console.log(users);
 
-        const tasks = await prisma.task.findMany();
-        console.log(tasks);
         app.listen(port, () => {
             console.log(`Server started at port ${port}`);
         });
