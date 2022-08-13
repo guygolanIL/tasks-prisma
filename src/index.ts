@@ -10,12 +10,6 @@ app.use(json());
 async function start() {
     try {
         await prisma.$connect();
-        await prisma.user.create({
-            data: {
-                email: 'guy.golan@yayd.com',
-                name: 'guy goldan',
-            }
-        });
         const user = await prisma.user.findFirst();
         console.log(user);
         app.listen(port, () => {
