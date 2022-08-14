@@ -1,4 +1,7 @@
 import { client } from '../config/axios';
+import { urlBuilder } from '../url';
+
+const taskUrlBuilder = () => urlBuilder().api().tasks();
 
 export type ITask = {
     id: number;
@@ -11,11 +14,13 @@ export type ITask = {
 export type ITaskCreateParams = Pick<ITask, 'title' | 'description'>;
 
 export async function getTasks() {
-    const result = await client.get<ITask[]>('/tasks');
+    const url = taskUrlBuilder().build();
+    const result = await client.get<ITask[]>(url);
     return result.data;
 }
 
 export async function createTask(taskParams: ITaskCreateParams) {
-    const result = await client.post('/tasks', taskParams);
+    const url = taskUrlBuilder().build();
+    const result = await client.post<ITask>(url, taskParams);
     return result.data;
 }
