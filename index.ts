@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 
 app.use(json());
 app.use(cors());
+app.use(express.static('public'));
 
 app.get('/user', async (req, res) => {
     const user = await prisma.user.findMany({
@@ -19,12 +20,12 @@ app.get('/user', async (req, res) => {
     res.send(user);
 });
 
-app.get('/addTask/:name', async (req, res) => {
+app.get('/tasks', async (req, res) => {
 
     const task = await prisma.task.create({
         data: {
-            title: req.params.name,
-            description: `description: ${req.params.name}`,
+            title: 'my task',
+            description: `my description`,
             userId: 1
         }
     });
@@ -32,9 +33,8 @@ app.get('/addTask/:name', async (req, res) => {
     res.send(task);
 });
 
-app.get('*', (req, res) => {
+app.get('/app', (req, res) => {
     const filePath = path.join(__dirname, 'public', 'index.html');
-    console.log(`sending file from ${filePath}`);
     res.sendFile(filePath);
 });
 

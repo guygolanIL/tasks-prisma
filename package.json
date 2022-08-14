@@ -2,12 +2,12 @@
   "name": "express-typescript-starter",
   "version": "1.1.0",
   "description": "a starter config for express + prisma backend with ts",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "scripts": {
-    "start": "npm run build:client && npm run cpy:client && npm run db:migrate && ts-node src/index.ts",
-    "dev": "nodemon src/index.ts",
+    "start": "npm run build:client && npm run cpy:client && npm run db:migrate && ts-node index.ts",
+    "dev": "nodemon index.ts",
     "build:client": "cd client && npm i && npm run build",
-    "cpy:client": "cp -R client/dist dist/public",
+    "cpy:client": "cp -R client/dist public",
     "db:migrate": "prisma migrate dev"
   },
   "author": "Guy.Golan",
