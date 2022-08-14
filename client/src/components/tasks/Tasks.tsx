@@ -1,7 +1,12 @@
+import { styled } from "@mui/material";
 import { useRef } from "react";
 import { useCreateTaskMutation } from "../../data/tasks/useCreateTaskMutation";
 import { useGetTasksQuery } from "../../data/tasks/useGetTasksQuery";
 import { Task } from "./Task";
+
+const TasksMain = styled('div')(({ theme }) => ({
+    backgroundColor: 'red',
+}));
 
 export function Tasks() {
     const { data: tasks, isLoading } = useGetTasksQuery();
@@ -19,11 +24,11 @@ export function Tasks() {
     }
 
     return (
-        <div>
+        <TasksMain>
             <input ref={titleRef} type='text' placeholder='title' />
             <input ref={descriptionRef} type='text' placeholder='descscription' />
             <button onClick={onCreate}>Create</button>
             {tasks?.map(task => <Task key={task.id} task={task} />)}
-        </div>
+        </TasksMain>
     );
 }

@@ -1,10 +1,18 @@
+import { Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { ITask } from "../../data/tasks/api";
+
+const TaskCard = styled('div')(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(1),
+}));
 
 export function Task({ task }: { task: ITask }) {
     return (
-        <div>
-            <h3>{task.title}</h3>
-            <div>{task.description}</div>
-        </div>
+        <TaskCard>
+            <Typography color='black' variant="h5">{task.title}</Typography>
+            <Typography color='black' variant="body1">{task.description}</Typography>
+        </TaskCard>
     );
 }
