@@ -7,5 +7,5 @@ as the dev db
 ## scripts
 - start - starting the server (production script)
 - dev - starting the server (locally)
-- run ``npx prisma migrate dev --name {your migration name}`` to update the local db schema
+- run ``npx prisma migrate dev --name {your migration name}`` to update the local db schema and create a migration script
 
