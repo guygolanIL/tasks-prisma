@@ -1,4 +1,4 @@
-import { schemaBuilder } from '@guygolanil/url-schema-builder/dist/schemaBuilder';
+import { schemaBuilder } from '@guygolanil/url-schema-builder';
 
 export const urlBuilder = () => {
     const { path, param, endpoint } = schemaBuilder({
