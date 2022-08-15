@@ -11,7 +11,7 @@ tasksRouter.get('/', async (req, res) => {
 
 const taskCreateParamsSchema = z.object({
     title: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
 });
 
 type ITaskCreateParams = z.infer<typeof taskCreateParamsSchema>;

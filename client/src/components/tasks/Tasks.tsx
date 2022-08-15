@@ -1,33 +1,36 @@
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import { useRef } from "react";
+import { ITaskCreateParams } from "../../data/tasks/api";
 import { useCreateTaskMutation } from "../../data/tasks/useCreateTaskMutation";
 import { useGetTasksQuery } from "../../data/tasks/useGetTasksQuery";
+import { Controls } from "./Controls/Controls";
 import { Task } from "./Task";
 
 const TasksMain = styled('div')(({ theme }) => ({
-    backgroundColor: 'red',
+    backgroundColor: theme.palette.common.white,
+    width: '40vw',
+    height: '70vh',
+    margin: 'auto',
+    borderRadius: theme.shape.borderRadius,
 }));
 
 export function Tasks() {
     const { data: tasks, isLoading } = useGetTasksQuery();
     const { mutate } = useCreateTaskMutation();
-    const titleRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLInputElement>(null);
 
     if (isLoading) return <span>Loading...</span>;
 
-    const onCreate = () => {
+    const onCreate = (params: ITaskCreateParams) => {
+        if (!params) return;
+        if (!params.title) return;
         mutate({
-            title: titleRef.current?.value || '',
-            description: descriptionRef.current?.value || '',
+            ...params
         });
     }
 
     return (
-        <TasksMain>
-            <input ref={titleRef} type='text' placeholder='title' />
-            <input ref={descriptionRef} type='text' placeholder='descscription' />
-            <button onClick={onCreate}>Create</button>
+        <TasksMain id='tasks-main'>
+            <Controls onAdd={(title) => onCreate(title)} />
             {tasks?.map(task => <Task key={task.id} task={task} />)}
         </TasksMain>
     );

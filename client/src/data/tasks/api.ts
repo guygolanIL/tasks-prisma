@@ -11,7 +11,9 @@ export type ITask = {
     userId: number;
 }
 
-export type ITaskCreateParams = Pick<ITask, 'title' | 'description'>;
+type IMandatoryTaskCreateParams = Pick<ITask, 'title'>
+type IOptionalTaskCreateParams = Partial<Pick<ITask, 'description'>>;
+export type ITaskCreateParams = IMandatoryTaskCreateParams & IOptionalTaskCreateParams;
 
 export async function getTasks() {
     const url = taskUrlBuilder().build();
