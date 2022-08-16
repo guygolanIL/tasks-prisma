@@ -26,3 +26,11 @@ export async function createTask(taskParams: ITaskCreateParams) {
     const result = await client.post<ITask>(url, taskParams);
     return result.data;
 }
+
+export async function deleteTask(taskId: number) {
+    const url = taskUrlBuilder().build({
+        id: taskId.toString()
+    });
+    const result = await client.delete<ITask>(url)
+    return result.data;
+}

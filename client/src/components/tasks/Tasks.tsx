@@ -1,8 +1,6 @@
-import { Button, styled } from "@mui/material";
-import { useRef } from "react";
+import { styled } from "@mui/material";
 import { ITaskCreateParams } from "../../data/tasks/api";
-import { useCreateTaskMutation } from "../../data/tasks/useCreateTaskMutation";
-import { useGetTasksQuery } from "../../data/tasks/useGetTasksQuery";
+import { taskHooks } from '../../data/tasks/hooks';
 import { Controls } from "./Controls/Controls";
 import { Task } from "./Task";
 
@@ -15,23 +13,28 @@ const TasksMain = styled('div')(({ theme }) => ({
 }));
 
 export function Tasks() {
-    const { data: tasks, isLoading } = useGetTasksQuery();
-    const { mutate } = useCreateTaskMutation();
+    const { data: tasks, isLoading } = taskHooks.useGetTasksQuery();
+    const { mutate: createTask } = taskHooks.useCreateTaskMutation();
+    const { mutate: deleteTask } = taskHooks.useDeleteTaskMutation();
 
     if (isLoading) return <span>Loading...</span>;
 
     const onCreate = (params: ITaskCreateParams) => {
         if (!params) return;
         if (!params.title) return;
-        mutate({
+        createTask({
             ...params
         });
-    }
+    };
+
+    const onDelete = (taskId: number) => {
+        deleteTask(taskId)
+    };
 
     return (
         <TasksMain id='tasks-main'>
             <Controls onAdd={(title) => onCreate(title)} />
-            {tasks?.map(task => <Task key={task.id} task={task} />)}
+            {tasks?.map(task => <Task key={task.id} task={task} onDelete={() => onDelete(task.id)} />)}
         </TasksMain>
     );
 }

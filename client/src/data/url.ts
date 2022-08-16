@@ -1,9 +1,7 @@
 import { schemaBuilder } from '@guygolanil/url-schema-builder';
 
 export const urlBuilder = () => {
-    const { path, param, endpoint } = schemaBuilder({
-        baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-    });
+    const { path, param, endpoint } = schemaBuilder();
 
     return {
         api: path('api', () => ({
